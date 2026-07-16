@@ -1,0 +1,34 @@
+# Dependencies and web build output
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Local environment files
+.env*
+!.env.example
+
+# Editors and operating systems
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+*.log
+
+# Capacitor / Android local and build output
+android/.gradle/
+android/app/build/
+android/build/
+android/local.properties
+*.apk
+*.aab
+
+# Signing material must never be committed
+*.jks
+*.keystore
+*.p12
+*.pfx
+android/key.properties
+android/keystore.properties
+android/signing.properties
