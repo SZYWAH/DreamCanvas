@@ -1,25 +1,16 @@
 import { StrictMode } from "react";
-import { Capacitor } from "@capacitor/core";
-import { StatusBar, Style } from "@capacitor/status-bar";
 import { createRoot } from "react-dom/client";
 import App from "./App";
+import { loadAppPreferences } from "./storage";
 import "./styles.css";
+import { applyTheme } from "./theme";
 
-const setupNativeStatusBar = async () => {
-  if (Capacitor.getPlatform() !== "android") {
-    return;
-  }
+const root = createRoot(document.getElementById("root")!);
 
-  await StatusBar.setOverlaysWebView({ overlay: false });
-  await StatusBar.setBackgroundColor({ color: "#F4F6F8" });
-  await StatusBar.setStyle({ style: Style.Light });
-  await StatusBar.show();
+const start = async () => {
+  const preferences = await loadAppPreferences();
+  await applyTheme(preferences.theme).catch(() => undefined);
+  root.render(<StrictMode><App initialTheme={preferences.theme} /></StrictMode>);
 };
 
-void setupNativeStatusBar().catch(() => undefined);
-
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+void start();
